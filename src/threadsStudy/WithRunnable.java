@@ -2,6 +2,8 @@ package threadsStudy;
 
 import entity.ThreadOutput;
 
+import java.util.LinkedList;
+
 public class WithRunnable implements Runnable {
 
     private String spaceTab;
@@ -15,6 +17,6 @@ public class WithRunnable implements Runnable {
 
     @Override
     public void run() {
-        ThreadOutput.operate(getClass().getName(), loopsNumber, spaceTab);
+        ThreadOutput.operate(loopsNumber, spaceTab, new LinkedList<>());
     }
 }

@@ -11,7 +11,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-        executionWithExecutor();
+        executorPlusSynchronizedResultQueue();
+
+        //executionWithExecutor();
 
         //standardThreadExecution();
 
@@ -20,16 +22,16 @@ public class Main {
         Studied with
         https://www.youtube.com/watch?v=r3Tf8kYhbi0&list=PLY7PmJJFH5nSJMIRopDsFOOsPjNYUsVms&index=8
     */
-    static private void executionWithExecutor() {
+    static private void executorPlusSynchronizedResultQueue() {
 
         int totalThreadNumber = 10;
         int concurrentThreadLimit = 4;
 
-        int[] resultThreadArray = new int[totalThreadNumber];
+        LinkedList<Integer> resultThreadArray = new LinkedList<>();
 
         //pool for concurrent processed threads
         ExecutorService pool = Executors.newFixedThreadPool(concurrentThreadLimit);
-        Queue<Future<Integer>> resultQueue = new LinkedList<Future<Integer>>();
+        Queue<Future<Integer>> resultQueue = new LinkedList<>();
 
         int count = 0;
 
@@ -49,7 +51,7 @@ public class Main {
 
                 // start threads and place future results into queue
                 System.out.println("Start thread " + startedThreadsNumber);
-                resultQueue.add(pool.submit(new WithCallable(stringBuilder.toString(), 15)));
+                resultQueue.add(pool.submit(new WithCallable(stringBuilder.toString(), 15, resultThreadArray)));
                 startedThreadsNumber++;
             }
 
@@ -78,13 +80,12 @@ public class Main {
 
                 try {
                     // ~thread join + get result
-                    resultThreadArray[finishedThreadNumber] = future.get();
+                    System.out.println("futureGet = " + future.get());
                     System.out.println("_____thread " + finishedThreadNumber + "finished");
 
                 } catch (Exception e) {
 
                     e.printStackTrace();
-                    resultThreadArray[finishedThreadNumber] = -1; //shows something gone wrong in a thread
                 }
 
                 finishedThreadNumber++;
@@ -96,7 +97,8 @@ public class Main {
         pool.shutdown();
 
         for (int i = 0; i < totalThreadNumber; i++) {
-            System.out.println(resultThreadArray[i]);
+
+            System.out.println(resultThreadArray.get(i));
         }
 
     }
@@ -109,7 +111,7 @@ public class Main {
 
         //new Thread(new WithRunnable("_____", loopsNumber)).start();
 
-        Callable<Integer> callable = new WithCallable("=====", loopsNumber);
+        Callable<Integer> callable = new WithCallable("=====", loopsNumber, new LinkedList<>());
         FutureTask<Integer> futureTask = new FutureTask<>(callable);
         Thread threadCallable = new Thread(futureTask);
 

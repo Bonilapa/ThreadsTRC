@@ -1,10 +1,11 @@
 package entity;
 
+import java.util.Queue;
 import java.util.Random;
 
 public  class ThreadOutput {
 
-    public static int operate(int upperLimit, String spaceTab) {
+    public static int operate(int upperLimit, String spaceTab, Queue<Integer> resultThreadArray) {
 
         int r = 0;
         int result = 0;
@@ -16,6 +17,8 @@ public  class ThreadOutput {
             System.out.println(spaceTab + r);
             result++;
         }
+
+        resultThreadArray.add(result);
         return result;
 
     }

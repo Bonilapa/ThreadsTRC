@@ -2,6 +2,9 @@ package threadsStudy;
 
 import entity.ThreadOutput;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class WithThread extends Thread {
 
     private String spaceTab;
@@ -16,6 +19,6 @@ public class WithThread extends Thread {
     @Override
     public void run() {
 
-        ThreadOutput.operate(getClass().getName(), loopsNumber, spaceTab);
+        ThreadOutput.operate( loopsNumber, spaceTab, new LinkedList<>());
     }
 }
