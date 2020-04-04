@@ -2,22 +2,32 @@ package threadsStudy;
 
 import entity.ThreadOutput;
 
+import java.util.Random;
 import java.util.concurrent.Callable;
 
 public class WithCallable implements Callable<Integer> {
 
     private String spaceTab;
-    private int loopsNumber;
+    private int upperLimit;
+    //loops number before random variable == 7
+    private int result;
 
-    public WithCallable(String spaceTab, int loopsNumber) {
+    public int getResult() {
+
+        return result;
+    }
+
+    public WithCallable(String spaceTab, int upperLimit) {
 
         this.spaceTab = spaceTab;
-        this.loopsNumber = loopsNumber;
+        this.upperLimit = upperLimit;
     }
 
     @Override
     public Integer call() throws Exception {
 
-        return ThreadOutput.operate(getClass().getName(), loopsNumber, spaceTab);
+        //result = ThreadOutput.operate(getClass().getName(), upperLimit, spaceTab);
+
+        return ThreadOutput.operate(upperLimit, spaceTab);
     }
 }

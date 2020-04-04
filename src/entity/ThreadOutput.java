@@ -1,15 +1,22 @@
 package entity;
 
+import java.util.Random;
+
 public  class ThreadOutput {
 
-    public static int operate(String className, int temp, String spaceTab) {
+    public static int operate(int upperLimit, String spaceTab) {
 
-        while (temp != 0) {
+        int r = 0;
+        int result = 0;
+        Random variable = new Random();
 
-            temp = out(className, temp, spaceTab) - 1;
+        while(r != 7){
+
+            r = variable.nextInt(upperLimit+1);
+            System.out.println(spaceTab + r);
+            result++;
         }
-
-        return temp;
+        return result;
 
     }
 
